@@ -15,7 +15,7 @@ struct person {
 	}
 };
 ostream& operator<<(ostream& os, const person& tab) { //przeci¹zenie operatora
-	os <<"Imie:" << tab.name <<"  Wiek:" << tab.age << endl;
+	os <<"Name: " << tab.name <<"  Age: " << tab.age << endl;
 	return os;
 }
 using TAB = vector<person>;
@@ -30,7 +30,6 @@ void showP(TAB tabela) { //pokazuje liste
 		cout << "\nRecords existing on the list:\n";
 		for (int i = 0; i < tabela.size();i++)
 			cout << tabela[i];
-		//cout << tabela[i].name << " " << tabela[i].age << endl;
 		cout << endl;
 	}
 }
@@ -44,13 +43,26 @@ void saveP(TAB tabela){//zapis do pliku
 
 void searchP(TAB tabela) { //szukanie czy imie istnieje w tabeli
 	string srcn;
-	//cout<<find(tabela[0].name, tabela[2].name,"Alex");
+	int licz{ 0 };
 	cout << "What name do u want to look for?\n";
 	cin >> srcn;
 	for (int i = 0; i < tabela.size();i++) {
-		if (tabela[i].name == srcn) cout << tabela[i];
+		if (tabela[i].name == srcn) {
+			cout << tabela[i];
+			licz++;
+		}
+	}
+	if (licz == 0) cout << "Nothing found\n";
+}
+void delP(TAB& tabela) {
+	string delnm;
+	cout << " Which record should I delete?\n";
+	cin >> delnm;
+	for (int i = 0;i < tabela.size();i++) {
+		if (tabela[i].name == delnm) tabela.erase(tabela.begin() + i);
 	}
 }
+
 int main()
 {
 	int choice{ 0 }, wiek{0};
@@ -63,8 +75,15 @@ int main()
 	//list.push_back(a);
 	//addP(b,list);
 	//showP(list);
+	/*vector<double> test;
+	test.push_back(2.4);
+	test.push_back(2.2);
+	test.push_back(1.0);
+	test.erase(test.begin()+i);
+	*/
 	for (;;) {
-		cout << "a - dopisz do tabeli, s - pokaz tabele \nw - zapisz tabele do pliku l - szukanie imion \nq -zakoncz\n\n";
+		cout << "a - add to tab\ns - show tab \nw - save to file\nl - look for names \n";
+		cout << "q - quit\nd - erase from tab\n\n";
 		cin >> temp;
 		choice = int(temp);
 		switch (choice) {
@@ -84,6 +103,9 @@ int main()
 			break;
 		case 'l': //szukanie imion
 			searchP(list);
+			break;
+		case 'd': //usuwanie
+			delP(list);
 			break;
 		case 'q': //wyjdziemy z pêtli
 			return 0;
