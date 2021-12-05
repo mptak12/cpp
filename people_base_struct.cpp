@@ -14,7 +14,7 @@ struct person {
 		age = a;
 	}
 };
-ostream& operator<<(ostream& os, const person& tab) { //przeci¹zenie operatora
+ostream& operator<<(ostream& os, const person& tab) { //przeciÂ¹zenie operatora
 	os <<"Name: " << tab.name <<"  Age: " << tab.age << endl;
 	return os;
 }
@@ -107,7 +107,7 @@ int main()
 		case 'd': //usuwanie
 			delP(list);
 			break;
-		case 'q': //wyjdziemy z pêtli
+		case 'q': //wyjdziemy z pÃªtli
 			return 0;
 		}
 	}
