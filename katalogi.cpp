@@ -34,17 +34,24 @@ vect read(wstring pathToShow) {
     return paths;
 }*/
 class reader {
+    const fs::path curr_path{ fs::current_path() }; //zmienna z aktualna sciezka
     vect paths{}, temp{};
+    wstring src_path;
+
 public:
-    vect read(wstring pathToShow);
+    reader(string addr) {
+        if (addr.compare("here") == 0) src_path = curr_path;
+        else src_path=wstring(addr.begin(), addr.end()); //konwersja z string na wstring
+    }
+
+    void read();
     auto set_paths(vect p) { paths = p; }
     auto get_paths() const { return paths; }
-    //dorobic gettery settery
 };
 
-vect reader::read(wstring pathToShow) {
-
-        for (const auto& entry : fs::directory_iterator(pathToShow)) { //zmienna entry: tam sa wszystkie sciezki
+void reader::read()//wstring pathToShow) 
+{                                           
+        for (const auto& entry : fs::directory_iterator(src_path)) { //zmienna entry: tam iteruj¹ siê sciezki
             const auto filenameStr = entry.path().filename().string();  //w tym pliku sa same nazwy plikow
             //cout << entry << endl; //pomocnicze
             string ext = std::filesystem::path(entry).extension().string(); //zmienna z formatem pliku
@@ -53,42 +60,44 @@ vect reader::read(wstring pathToShow) {
                 //cout << "jest tekst lub cpp Nazwa: " << filenameStr << endl; //info ze znalazl plik
                 paths.push_back(entry.path());
             }
+            /*
             else if (entry.is_directory())
-            {
+            {  
                 temp = read(entry.path()); //rekurencja
                 paths.insert(paths.end(), temp.begin(), temp.end()); //laczenie wektorow
             }
+            */
         }
-    return paths;
+        //return paths;
 }
 
 int main() {
-    reader a;
-
-    const fs::path currpath{ fs::current_path() }; //zmienna z aktualna sciezka
-    wstring path{};
-    vect paths;
+    string catalog;
 
     cout << "Tell me catalog path. Type 'here' to start from current catalog" << endl;
-    wcin >> path;
-
-    string p(path.begin(), path.end()); //zmienna do porownania
+    cin >> catalog;
+  
+    reader* files = new reader(catalog);
+    files->read(); //tu jest blad 
+    //funkcja wykorzystuje referencje - nie wiem jak jej uzywac, jesli nie przekazuje parametru do funkcji
     
-    if (p.compare("here") == 0) paths = reader::read(currpath);
-    else paths = reader::read(path);
+
+    /*
+    vect paths=files->get_paths(); //odczytanie sciezek do programu glownego
 
     if (paths.size() == 0) cout << "nie ma wody na pustyni" << endl;
     else 
-        cout << "Liczba plikow cpp i txt: " << paths.size() <<endl;
+        cout << "Liczba plikow cpp i txt: " << paths.size() <<endl; 
     
-    for (const auto p : paths)
+    for (const auto p : paths) wypisanie sciezek na ekran
         wcout << p<<endl;
 
-    Sleep(4000);
+    //Sleep(4000);
     //string s;
     //ifstream czytaj(paths[4]);
     //czytaj >> s;
     //czytaj.close();
     //cout << endl << s << endl;
+    */
     return 0;
 }
