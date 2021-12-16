@@ -6,7 +6,7 @@
 #include <Windows.h>
 
 
-using std::cout, std::cin, std::vector, std::wstring, std::string, std::wcout, std::wcin, std::endl;
+using std::cout, std::cin, std::vector, std::wstring, std::string, std::wcout, std::wcin, std::endl, std::fstream;
 namespace fs = std::filesystem;
 using vect = vector<wstring>;
 
@@ -51,10 +51,11 @@ vect reader::read()//wstring pathToShow)
 
 class scanner {
     vect f_p{}; //od poprzedniej klasy - sciezki plikow
-
+    int word_count{ 0 };
 public:
     scanner(vect f_p) { this->f_p = f_p; }  //konstr
     void if_empty_check();        //sprawdza czy puste
+    void summary();
 };
 
 void scanner::if_empty_check() {
@@ -63,6 +64,20 @@ void scanner::if_empty_check() {
         cout << "Number of matches: " << f_p.size() << endl;
     for (const auto p : f_p) //wypisanie sciezek na ekran
         wcout << p << endl;
+}
+
+void scanner::summary() {
+    //ta funkcja skanuje wszystkie podane sciezki i podaje ich ogolne podsumowanie
+    string word;
+    for (const auto a : f_p)
+    {
+        fstream czytaj(a);
+        while(czytaj >> word)
+            word_count++;
+        
+        czytaj.close();
+    }
+    cout <<"Number of words in files : "<< word_count << endl;
 }
 
 int main() {
@@ -81,13 +96,8 @@ int main() {
     
     scanner* analyze = new scanner(fil_p);
     analyze->if_empty_check();
-
-    //Sleep(4000);
-    //string s;
-    //ifstream czytaj(paths[4]);
-    //czytaj >> s;
-    //czytaj.close();
-    //cout << endl << s << endl;
-    
+    analyze->summary();
+    Sleep(4000);
+   
     return 0;
 }
