@@ -77,6 +77,6 @@ int main()
 	//printmatrix(mat2);
 	//printmatrix(summatrix(mat, mat));
 	//printmatrix(summatrix(mat2,mat2));
-	cout << "Wynik mno¿enia" << endl;
+	cout << "Wynik mnoÂ¿enia" << endl;
 	printmatrix(mmat(mat, mat2));
 }
