@@ -15,10 +15,10 @@ int main()
 	srand(time(0));
 	vector <int> los(10);
 	//generate(los.begin(), los.end(), std::mt19937(std::random_device{}()));
-	generate(los.begin(), los.end(), []() {return rand() % 15; }); //tu jest ju¿ f.lambda co generuje rand
+	generate(los.begin(), los.end(), []() {return rand() % 15; }); //tu jest juÂ¿ f.lambda co generuje rand
 	copy(los.begin(), los.end(), ostream_iterator<int>(cout," ")); //wypisanie na ekran
 
-	sort(los.begin(), los.end(), [](int a, int b) {return a < b;}); //sortowanie z lambd¹
+	sort(los.begin(), los.end(), [](int a, int b) {return a < b;}); //sortowanie z lambdÂ¹
 	cout << endl;
 	for (const auto x : los) cout << x << " "; //wypisanie wektora
 
